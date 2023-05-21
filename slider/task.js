@@ -1,45 +1,37 @@
 let arrowNext = document.querySelector('.slider__arrow_next');
 let arrowPrev = document.querySelector('.slider__arrow_prev');
 let sliderDots = document.querySelectorAll('.slider__dot');
-let buttons = document.querySelectorAll('.slider__arrow_next, .slider__arrow_prev, .slider__dot');
 let sliderItems = document.querySelectorAll('.slider__item');
 
 
-buttons.forEach.call(buttons, (button) => {
-    button.addEventListener('click', () => {
-        activeSlide = document.querySelector('.slider__item_active');
-        activeSlide.classList.remove('slider__item_active');
-        removeSliderDots();
-        sliderDots[[].slice.call(sliderItems).indexOf(activeSlide)].classList.add('slider__dot_active');
-    });
-});
+function showActiveSlide(index) {
+    let currIndex = [...sliderItems].findIndex(slider =>
+        slider.classList.contains('slider__item_active'))
+    sliderItems[currIndex].classList.remove('slider__item_active');
+    sliderDots[currIndex].classList.remove('slider__dot_active');
+    if (index < 0) {
+        index = sliderItems.length - 1
+    } else if (index > (sliderItems.length - 1)) {
+        index = 0
+    }
+    sliderItems[index].classList.add('slider__item_active');
+    sliderDots[index].classList.add('slider__dot_active');
+}
 
 arrowNext.onclick = () => {
-    if (activeSlide.nextElementSibling) {    
-        activeSlide.nextElementSibling.classList.add('slider__item_active');
-    } else {
-        sliderItems[0].classList.add('slider__item_active');
-    }
+    currIndex = [...sliderItems].findIndex(slider =>
+        slider.classList.contains('slider__item_active'))
+    showActiveSlide(currIndex + 1)
 }
 
 arrowPrev.onclick = () => {
-    if (activeSlide.previousElementSibling) {
-        activeSlide.previousElementSibling.classList.add('slider__item_active');
-    } else {
-        [].slice.call(sliderItems).pop().classList.add('slider__item_active');
-    }
+    currIndex = [...sliderItems].findIndex(slider =>
+        slider.classList.contains('slider__item_active'))
+    showActiveSlide(currIndex - 1)
 }
 
 sliderDots.forEach.call(sliderDots, (dot) => {
     dot.addEventListener('click', () => {
-        removeSliderDots();
-        sliderItems[[].slice.call(sliderDots).indexOf(dot)].classList.add('slider__item_active');
-    });
-    
-});
-
-removeSliderDots = () => {
-    sliderDots.forEach((dot) => {
-        dot.classList.remove('slider__dot_active');
-    }); 
-}
+        showActiveSlide([...sliderDots].indexOf(dot))
+    })
+})

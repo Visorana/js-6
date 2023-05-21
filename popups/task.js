@@ -6,10 +6,6 @@ let showSuccess = document.querySelector('.show-success');
 
 modalMain.classList.add('modal_active');
 
-showSuccess.addEventListener('click', () => {
-    modalSuccess.classList.add('modal_active');
-});
-
 modalsClose.forEach.call(modalsClose, (button) => {
     button.addEventListener('click', () => {
         modals.forEach((modal) => {
@@ -17,3 +13,9 @@ modalsClose.forEach.call(modalsClose, (button) => {
         });
     });
 });
+
+showSuccess.addEventListener('click', () => {
+    modalSuccess.classList.add('modal_active');
+    console.log(modalSuccess)
+});
+
